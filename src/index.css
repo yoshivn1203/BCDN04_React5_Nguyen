@@ -20,9 +20,6 @@ body {
   border-radius: 12px;
   background-color: white;
   margin: 3rem auto;
-}
-
-.form-layout {
   display: grid;
   justify-items: center;
 }
@@ -115,4 +112,55 @@ button:disabled:active {
 
 .error-text {
   color: #b40e0e;
+}
+
+#title {
+  margin-top: 50px;
+  text-align: center;
+}
+
+#employee {
+  border-collapse: collapse;
+  border: 3px solid #ddd;
+  width: 95%;
+}
+
+#employee td,
+#employee th {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+#employee tr:hover {
+  background-color: #ddd;
+}
+
+#employee th {
+  padding: 10px;
+  text-align: center;
+  background-color: #240370;
+  color: white;
+}
+
+.operation {
+  text-align: center;
+}
+
+.table-button {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #b40e0e;
+  padding: 3px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #b40e0e;
+  background-color: transparent;
+}
+
+.table-button:hover,
+.table-button:active {
+  background-color: #b40e0e;
+  border-color: #b40e0e;
+  color: #f1f1f1;
 }
