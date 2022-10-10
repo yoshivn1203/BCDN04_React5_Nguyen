@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addStudent } from '../features/studentSlice';
+import { addStudent, viewStudentDetail, updateStudent } from '../features/studentSlice';
 
 const initialState = { id: '', name: '', phoneNumber: '', email: '' };
 const Form = () => {
@@ -10,7 +10,8 @@ const Form = () => {
     isValid: initialState,
   });
   const [formIsValid, SetFormIsvalid] = useState(false); //validity of the whole form
-  const { studentList } = useSelector((store) => store.student);
+  const [isEditing, setIsEditing] = useState(false);
+  const { studentList, SelectedStudent } = useSelector((store) => store.student);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -53,8 +54,19 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addStudent(formValue.info));
+    if (isEditing) {
+      dispatch(updateStudent(formValue.info));
+    } else {
+      dispatch(addStudent(formValue.info));
+    }
     setFormValue({ info: initialState, msg: initialState, isValid: initialState }); // clear form
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setFormValue({ info: initialState, msg: initialState, isValid: initialState });
+    dispatch(viewStudentDetail()); // remove SelectedStudent
   };
 
   // check validity for the whole form
@@ -66,6 +78,21 @@ const Form = () => {
       SetFormIsvalid(false);
     }
   }, [formValue.isValid]);
+
+  useEffect(() => {
+    if (SelectedStudent) {
+      setIsEditing(true);
+      setFormValue((formValue) => {
+        return {
+          ...formValue,
+          info: SelectedStudent,
+          msg: initialState,
+          isValid: { id: true, name: true, phoneNumber: true, email: true },
+        };
+      });
+      SetFormIsvalid(true);
+    }
+  }, [SelectedStudent]);
 
   return (
     <>
@@ -84,6 +111,7 @@ const Form = () => {
               value={formValue.info.id}
               pattern='^[a-zA-Z0-9]*$'
               onChange={handleChange}
+              disabled={isEditing}
             />
             <p className='error-text'>{formValue.msg.id}</p>
           </div>
@@ -95,7 +123,7 @@ const Form = () => {
               id='name'
               name='name'
               title='name'
-              pattern='^[a-zA-Z ]*$'
+              pattern='^[a-z A-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹý\\s]+$'
               value={formValue.info.name}
               onChange={handleChange}
             />
@@ -134,8 +162,13 @@ const Form = () => {
         </div>
         <div className='form-actions'>
           <button type='submit' disabled={!formIsValid}>
-            Add Student
+            {isEditing ? 'Update Student' : 'Add Student'}
           </button>
+          {isEditing && (
+            <button type='button' className='btn-stopEdit' onClick={handleCancel}>
+              Cancel
+            </button>
+          )}
         </div>
       </form>
     </>

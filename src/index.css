@@ -71,6 +71,10 @@ h2 {
   flex: 1;
 }
 
+input:disabled {
+  background-color: #dfdfdf;
+}
+
 button {
   font: inherit;
   background-color: #240370;
@@ -95,10 +99,19 @@ button:disabled:active {
   border-color: #ccc;
   cursor: not-allowed;
 }
+.btn-stopEdit {
+  border: none;
+  outline: none;
+  background-color: #b40e0e;
+}
+.btn-stopEdit:hover,
+.btn-stopEdit:active {
+  background-color: #d61717;
+}
 
 .form-actions {
   text-align: right;
-  margin-bottom: 30px;
+  margin: 10px 0;
 }
 
 .form-actions button {
@@ -143,7 +156,7 @@ button:disabled:active {
 #employee th {
   padding: 10px;
   text-align: center;
-  background-color: #240370;
+  background-color: #006b79;
   color: white;
 }
 
@@ -151,9 +164,7 @@ button:disabled:active {
   text-align: center;
 }
 
-.table-button {
-  border: none;
-  outline: none;
+.table-button-del {
   font-size: 14px;
   color: #b40e0e;
   padding: 3px 10px;
@@ -163,17 +174,67 @@ button:disabled:active {
   background-color: transparent;
 }
 
-.table-button:hover,
-.table-button:active {
+.table-button-del:hover,
+.table-button-del:active {
   background-color: #b40e0e;
   border-color: #b40e0e;
   color: #f1f1f1;
 }
 
+.table-button-edit {
+  margin-right: 10px;
+  font-size: 14px;
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+
 hr {
   margin-top: -10px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   border: none;
   border-top: 1px solid #b40e0e;
   width: 80%;
+}
+
+/* Search form */
+
+.search {
+  padding-bottom: 10px;
+  padding-left: 25px;
+  width: 30%;
+  justify-self: start;
+}
+.search-form {
+  display: flex;
+}
+
+.search-form:focus-visible {
+  outline: none;
+}
+.form-input {
+  width: 100%;
+}
+
+.form-input:focus-visible {
+  outline: none;
+}
+.form-input,
+.submit-btn {
+  padding: 0;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  font-size: 1.2rem;
+  background: transparent;
+  color: #006b79;
+  border-bottom: 2px solid #006b79;
+}
+.submit-btn:hover {
+  background: transparent;
+}
+.form-input {
+  color: 006b79;
+}
+.form-input::placeholder {
+  color: #006b79;
 }

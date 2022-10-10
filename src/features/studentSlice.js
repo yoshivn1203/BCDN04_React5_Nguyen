@@ -6,7 +6,7 @@ const initialState = {
     { id: 'k1', name: 'Ben', phoneNumber: '0896565447', email: 'ben@mail.com' },
     { id: 'k2', name: 'Alex', phoneNumber: '0965412358', email: 'alex@mail.com' },
   ],
-  SelectedStudent: {},
+  SelectedStudent: null,
 };
 
 const studentSlice = createSlice({
@@ -14,7 +14,6 @@ const studentSlice = createSlice({
   initialState,
   reducers: {
     addStudent: (state, { payload }) => {
-      console.log(payload);
       state.studentList.push(payload);
       toast.success('Add Student Successfully');
     },
@@ -23,11 +22,27 @@ const studentSlice = createSlice({
       state.studentList = tempList;
       toast.success('Delete Student Successfully');
     },
-    findStudentById: (state, { payload }) => {
-      const student = state.studentList.find((student) => student.id === payload);
-      state.SelectedStudent = student;
+    viewStudentDetail: (state, { payload }) => {
+      if (payload) {
+        const student = state.studentList.find((student) => student.id === payload);
+        state.SelectedStudent = student;
+      } else {
+        state.SelectedStudent = null;
+      }
+    },
+    updateStudent: (state, { payload }) => {
+      let { studentList } = state;
+      let index = studentList.findIndex((s) => s.id === payload.id);
+      if (index !== -1) {
+        studentList[index] = payload;
+        state.SelectedStudent = null;
+        toast.success('Update Student Successfully');
+      } else {
+        toast.error('Error! Something went wrong');
+      }
     },
   },
 });
-export const { addStudent, deleteStudent } = studentSlice.actions;
+export const { addStudent, deleteStudent, viewStudentDetail, updateStudent } =
+  studentSlice.actions;
 export default studentSlice.reducer;
