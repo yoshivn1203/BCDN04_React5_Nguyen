@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { deleteStudent } from '../features/studentSlice';
 
 const Table = () => {
   const { studentList } = useSelector((store) => store.student);
@@ -21,7 +22,7 @@ const Table = () => {
           <td>{phoneNumber}</td>
           <td>{email}</td>
           <td className='operation'>
-            <button className='table-button' onClick={() => console.log(id)}>
+            <button className='table-button' onClick={() => dispatch(deleteStudent(id))}>
               Delete
             </button>
           </td>
@@ -33,6 +34,7 @@ const Table = () => {
   return (
     <>
       <h2 id='title'>Student List</h2>
+      <hr />
       <table id='employee'>
         <thead>
           <tr>{renderHeader()}</tr>

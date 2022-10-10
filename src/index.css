@@ -13,6 +13,10 @@ body {
   background-color: #3f3f3f;
 }
 
+h1,
+h2 {
+  color: #b40e0e;
+}
 .app {
   width: 90%;
   max-width: 60rem;
@@ -94,6 +98,7 @@ button:disabled:active {
 
 .form-actions {
   text-align: right;
+  margin-bottom: 30px;
 }
 
 .form-actions button {
@@ -115,7 +120,7 @@ button:disabled:active {
 }
 
 #title {
-  margin-top: 50px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -163,4 +168,12 @@ button:disabled:active {
   background-color: #b40e0e;
   border-color: #b40e0e;
   color: #f1f1f1;
+}
+
+hr {
+  margin-top: -10px;
+  margin-bottom: 50px;
+  border: none;
+  border-top: 1px solid #b40e0e;
+  width: 80%;
 }

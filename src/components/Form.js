@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addStudent } from './features/studentSlice';
+import { addStudent } from '../features/studentSlice';
 
 const initialState = { id: '', name: '', phoneNumber: '', email: '' };
 const Form = () => {
@@ -38,7 +38,7 @@ const Form = () => {
       message = `invalid ${title} format`;
     }
     setFormValue({
-      info: { ...formValue.info, [e.target.name]: [e.target.value] },
+      info: { ...formValue.info, [e.target.name]: e.target.value },
       msg: { ...formValue.msg, [name]: message },
       isValid: { ...formValue.isValid, [name]: valid },
     });
@@ -62,6 +62,8 @@ const Form = () => {
 
   return (
     <>
+      <h2>Student Management</h2>
+      <hr />
       <form onSubmit={handleSubmit} noValidate>
         <div className='control-group'>
           <div className={`form-control ${formValue.msg.id ? 'invalid' : ''}`}>

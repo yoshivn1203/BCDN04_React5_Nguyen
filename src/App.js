@@ -9,6 +9,7 @@ function App() {
     <>
       <div className='app'>
         <Form />
+
         <Table />
         <ToastContainer />
       </div>
