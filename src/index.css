@@ -55,7 +55,7 @@ h2 {
 .form-control input:focus {
   outline: none;
   border-color: #240370;
-  background-color: #e0d4fd;
+  background-color: #effdff;
 }
 
 .control-group {
@@ -77,9 +77,9 @@ input:disabled {
 
 button {
   font: inherit;
-  background-color: #240370;
+  background-color: #006b79;
   color: white;
-  border: 1px solid #240370;
+  border: 1px solid #006b79;
   padding: 0.5rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
@@ -87,8 +87,8 @@ button {
 
 button:hover,
 button:active {
-  background-color: #33059e;
-  border-color: #33059e;
+  background-color: #0c7e8d;
+  border-color: #0c7e8d;
 }
 
 button:disabled,

@@ -9,17 +9,13 @@ const Table = () => {
   const [filtedStudents, SetFilteredStudents] = useState(studentList);
   const dispatch = useDispatch();
 
-  const handleSubmit = (second) => {};
-
   useEffect(() => {
     const students = studentList.filter((s) =>
       s.name.toLowerCase().includes(searchValue.toLowerCase().trim())
     );
-    if (searchValue.trim() === '') {
-      SetFilteredStudents(studentList);
-    } else {
-      SetFilteredStudents(students);
-    }
+    searchValue.trim() === ''
+      ? SetFilteredStudents(studentList)
+      : SetFilteredStudents(students);
   }, [searchValue, studentList]);
 
   const renderHeader = () => {
@@ -70,7 +66,7 @@ const Table = () => {
               SetSearchValue(e.target.value);
             }}
           />
-          <button type='submit' className='submit-btn' onClick={handleSubmit}>
+          <button type='button' className='submit-btn'>
             <FaSearch />
           </button>
         </form>
