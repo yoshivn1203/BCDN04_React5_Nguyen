@@ -9,7 +9,8 @@ const Form = () => {
     msg: initialState,
     isValid: initialState,
   });
-  const [formIsValid, SetFormIsvalid] = useState(false);
+  const [formIsValid, SetFormIsvalid] = useState(false); //validity of the whole form
+  const { studentList } = useSelector((store) => store.student);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -26,6 +27,12 @@ const Form = () => {
     //validation
     if (valueMissing) {
       message = `This field is required and cannot be empty`;
+    }
+    if (name === 'id') {
+      const studentsWithSameID = studentList.filter((s) => s.id === value);
+      if (studentsWithSameID.length !== 0) {
+        message = `${title} "${value}" is already exist`;
+      }
     }
     if (
       minLength > -1 &&
@@ -53,7 +60,7 @@ const Form = () => {
   // check validity for the whole form
   useEffect(() => {
     const { id, name, phoneNumber, email } = formValue.isValid;
-    if (id === true && name === true && phoneNumber === true && email === true) {
+    if (id && name && phoneNumber && email) {
       SetFormIsvalid(true);
     } else {
       SetFormIsvalid(false);
