@@ -35,11 +35,11 @@ const studentSlice = createSlice({
       let index = studentList.findIndex((s) => s.id === payload.id);
       if (index !== -1) {
         studentList[index] = payload;
-        state.SelectedStudent = null;
         toast.success('Update Student Successfully');
       } else {
         toast.error('Error! Something went wrong');
       }
+      state.SelectedStudent = null;
     },
   },
 });
