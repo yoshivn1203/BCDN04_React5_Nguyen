@@ -15,7 +15,7 @@ const Form = () => {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    const {
+    let {
       name,
       title,
       value,
@@ -33,6 +33,7 @@ const Form = () => {
       const studentsWithSameID = studentList.filter((s) => s.id === value);
       if (studentsWithSameID.length !== 0) {
         message = `${title} "${value}" is already exist`;
+        valid = false;
       }
     }
     if (
