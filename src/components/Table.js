@@ -20,7 +20,6 @@ const Table = () => {
 
   const renderHeader = () => {
     let headerElement = ['id', 'name', 'phone', 'email', 'operation'];
-
     return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
     });
@@ -62,9 +61,7 @@ const Table = () => {
             placeholder='Search'
             className='form-input'
             value={searchValue}
-            onChange={(e) => {
-              SetSearchValue(e.target.value);
-            }}
+            onChange={(e) => SetSearchValue(e.target.value)}
           />
           <button type='button' className='submit-btn'>
             <FaSearch />

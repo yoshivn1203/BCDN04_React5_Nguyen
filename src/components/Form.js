@@ -6,8 +6,8 @@ const initialState = { id: '', name: '', phoneNumber: '', email: '' };
 const Form = () => {
   const [formValue, setFormValue] = useState({
     info: initialState,
-    msg: initialState,
-    isValid: initialState,
+    message: initialState, // error message
+    isValid: initialState, //vaidity of each input
   });
   const [formIsValid, SetFormIsvalid] = useState(false); //validity of the whole form
   const [isEditing, setIsEditing] = useState(false);
@@ -46,51 +46,41 @@ const Form = () => {
       message = `invalid ${title} format`;
     }
     setFormValue({
-      info: { ...formValue.info, [e.target.name]: e.target.value },
-      msg: { ...formValue.msg, [name]: message },
+      info: { ...formValue.info, [name]: value },
+      message: { ...formValue.message, [name]: message },
       isValid: { ...formValue.isValid, [name]: valid },
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isEditing) {
-      dispatch(updateStudent(formValue.info));
-    } else {
-      dispatch(addStudent(formValue.info));
-    }
-    setFormValue({ info: initialState, msg: initialState, isValid: initialState }); // clear form
+    isEditing
+      ? dispatch(updateStudent(formValue.info))
+      : dispatch(addStudent(formValue.info));
+    setFormValue({ info: initialState, message: initialState, isValid: initialState }); // clear form
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setFormValue({ info: initialState, msg: initialState, isValid: initialState });
+    setFormValue({ info: initialState, message: initialState, isValid: initialState });
     dispatch(viewStudentDetail()); // remove SelectedStudent
   };
 
   // check validity for the whole form
   useEffect(() => {
     const { id, name, phoneNumber, email } = formValue.isValid;
-    if (id && name && phoneNumber && email) {
-      SetFormIsvalid(true);
-    } else {
-      SetFormIsvalid(false);
-    }
+    id && name && phoneNumber && email ? SetFormIsvalid(true) : SetFormIsvalid(false);
   }, [formValue.isValid]);
 
   useEffect(() => {
     if (SelectedStudent) {
       setIsEditing(true);
-      setFormValue((formValue) => {
-        return {
-          ...formValue,
-          info: SelectedStudent,
-          msg: initialState,
-          isValid: { id: true, name: true, phoneNumber: true, email: true },
-        };
+      setFormValue({
+        info: SelectedStudent,
+        message: initialState,
+        isValid: { id: true, name: true, phoneNumber: true, email: true },
       });
-      SetFormIsvalid(true);
     }
   }, [SelectedStudent]);
 
@@ -100,7 +90,7 @@ const Form = () => {
       <hr />
       <form onSubmit={handleSubmit} noValidate>
         <div className='control-group'>
-          <div className={`form-control ${formValue.msg.id ? 'invalid' : ''}`}>
+          <div className={`form-control ${formValue.message.id ? 'invalid' : ''}`}>
             <label htmlFor='id'>ID</label>
             <input
               required
@@ -113,9 +103,9 @@ const Form = () => {
               onChange={handleChange}
               disabled={isEditing}
             />
-            <p className='error-text'>{formValue.msg.id}</p>
+            <p className='error-text'>{formValue.message.id}</p>
           </div>
-          <div className={`form-control ${formValue.msg.name ? 'invalid' : ''}`}>
+          <div className={`form-control ${formValue.message.name ? 'invalid' : ''}`}>
             <label htmlFor='name'>Name</label>
             <input
               required
@@ -127,9 +117,11 @@ const Form = () => {
               value={formValue.info.name}
               onChange={handleChange}
             />
-            <p className='error-text'>{formValue.msg.name}</p>
+            <p className='error-text'>{formValue.message.name}</p>
           </div>
-          <div className={`form-control ${formValue.msg.phoneNumber ? 'invalid' : ''}`}>
+          <div
+            className={`form-control ${formValue.message.phoneNumber ? 'invalid' : ''}`}
+          >
             <label htmlFor='phoneNumber'>Phone Number</label>
             <input
               required
@@ -143,9 +135,9 @@ const Form = () => {
               value={formValue.info.phoneNumber}
               onChange={handleChange}
             />
-            <p className='error-text'>{formValue.msg.phoneNumber}</p>
+            <p className='error-text'>{formValue.message.phoneNumber}</p>
           </div>
-          <div className={`form-control ${formValue.msg.email ? 'invalid' : ''}`}>
+          <div className={`form-control ${formValue.message.email ? 'invalid' : ''}`}>
             <label htmlFor='email'>E-Mail Address</label>
             <input
               required
@@ -157,7 +149,7 @@ const Form = () => {
               value={formValue.info.email}
               onChange={handleChange}
             />
-            <p className='error-text'>{formValue.msg.email}</p>
+            <p className='error-text'>{formValue.message.email}</p>
           </div>
         </div>
         <div className='form-actions'>
