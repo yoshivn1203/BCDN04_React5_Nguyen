@@ -55,6 +55,7 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formIsValid) return;
     isEditing
       ? dispatch(updateStudent(formValue.info))
       : dispatch(addStudent(formValue.info));
